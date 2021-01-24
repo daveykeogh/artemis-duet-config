@@ -30,9 +30,9 @@ M584 X0 Y1 Z2 E3:4                                    ; set drive mapping
 M350 X16 Y16 Z16 E16:16 I1                            ; configure microstepping with interpolation
 M92 X200 Y200 Z200                                    ; set steps per mm
 M92 E830:830                                          ; set steps per mm
-M566 X2000 Y2000 Z2000 E2000:2000                     ; set maximum instantaneous speed changes (mm/min)
+M566 X1200 Y1200 Z2000 E2000:2000                     ; set maximum instantaneous speed changes (mm/min)
 M203 X18000 Y18000 Z18000 E18000:18000                ; set maximum speeds (mm/min)
-M201 X4200 Y4200 Z4200 E5000:5000                     ; set accelerations (mm/s^2)
+M201 X2100 Y2100 Z2100 E5000:5000                     ; set accelerations (mm/s^2)
 M906 X1500 Y1500 Z1500 E1400:1400 I50                 ; set motor currents (mA) and motor idle factor in per cent
 M84 S30                                               ; Set idle timeout (TODO: Figure out defaults from old firmware)
 
@@ -62,6 +62,8 @@ M950 F0 C"fan0" Q500                                  ; create fan 0 on pin fan0
 M106 P0 S0 H-1                                        ; set fan 0 value. Thermostatic control is turned off
 M950 F1 C"fan1" Q500                                  ; create fan 1 on pin fan2 and set its frequency
 M106 P1 S1 H1 T50                                     ; set fan 1 value. Thermostatic control is turned on
+M950 F2 C"!fan2" Q25000                               ; create fan2 on pin fan2 and set it's frequency. This is the top of case fan.
+M106 P2 S1 H1 T50                                     ; set fan 2 value. Thermostatic control is turned on. We want this on if the hotend is heating, aka printer printing.
 
 ; Tools
 M563 P0 D0 H1 F0                                      ; define tool 0
