@@ -30,9 +30,11 @@ M584 X0 Y1 Z2 E3:4                                    ; set drive mapping
 M350 X16 Y16 Z16 E16:16 I1                            ; configure microstepping with interpolation
 M92 X200 Y200 Z200                                    ; set steps per mm
 M92 E830:830                                          ; set steps per mm
-M566 X1200 Y1200 Z2000 E2000:2000                     ; set maximum instantaneous speed changes (mm/min)
+;M566 X1200 Y1200 Z2000 E2000:2000                     ; set maximum instantaneous speed changes (mm/min)
+M566 X600 Y600 Z2000 E2000:2000                     ; set maximum instantaneous speed changes (mm/min)
 M203 X18000 Y18000 Z18000 E18000:18000                ; set maximum speeds (mm/min)
-M201 X2100 Y2100 Z2100 E5000:5000                     ; set accelerations (mm/s^2)
+;M201 X2100 Y2100 Z2100 E5000:5000                     ; set accelerations (mm/s^2)
+M201 X1000 Y1000 Z2100 E5000:5000                     ; set accelerations (mm/s^2)
 M906 X1500 Y1500 Z1500 E1400:1400 I50                 ; set motor currents (mA) and motor idle factor in per cent
 M84 S30                                               ; Set idle timeout (TODO: Figure out defaults from old firmware)
 
@@ -47,12 +49,12 @@ G31 P100 X0 Y0 Z-0.3                                  ; set Z probe trigger valu
 M557 R140 S30                                         ; define mesh grid
 
 ; Heaters (custom - copperhead)
-M308 S0 P"bedtemp" Y"thermistor" T100000 B4388        ; configure sensor 0 as thermistor on pin bedtemp
+M308 S0 P"bedtemp" Y"thermistor" T100000 B4388 A"Bed"        ; configure sensor 0 as thermistor on pin bedtemp
 M950 H0 C"bedheat" T0                                 ; create bed heater output on bedheat and map it to sensor 0
 M307 H0 B1 S1.00                                      ; enable bang-bang mode for the bed heater and set PWM limit
 M140 H0                                               ; map heated bed to heater 0
 M143 H0 S120                                          ; set temperature limit for heater 0 to 120C
-M308 S1 P"e0temp" Y"thermistor" T100000 B4388         ; configure sensor 1 as thermistor on pin e0temp
+M308 S1 P"spi.cs1" Y"rtd-max31865" A"Hotend"          ; define temperature sensor number 1 as a PT100 on the first port of a temperature daughter board plugged into the expansion board with CAN bus address 3.
 M950 H1 C"e0heat" T1                                  ; create nozzle heater output on e0heat and map it to sensor 1
 M307 H1 B0 S1.00                                      ; disable bang-bang mode for heater  and set PWM limit
 M143 H1 S350                                          ; set temperature limit for heater 1 to 350C
